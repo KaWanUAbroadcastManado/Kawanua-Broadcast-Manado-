@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kawanua Broadcast | Jasa Live Streaming & Produksi Broadcast Profesional Manado</title>
+    <meta name="description" content="Solusi Siaran Langsung & Produksi Broadcast Standar Televisi di Manado & Sulawesi Utara. Multi-Camera 4K/FHD, Koneksi Bonding Anti-Lag untuk Event Pemerintahan, Korporat, Konser, dan Wedding.">
+    
+    <!-- Google Fonts: Space Grotesk (Heading) & Plus Jakarta Sans (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#070B14',
+                            900: '#0B1120',
+                            800: '#111827',
+                            700: '#1E293B',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                            600: '#0891B2',
+                        },
+                        live: {
+                            500: '#EF4444',
+                            600: '#DC2626',
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS untuk Efek Broadcast, Viewfinder & Animasi -->
+    <style>
+        :root {
+            --bg-primary: #0B1120;
+            --bg-secondary: #111827;
+            --accent-cyan: #06B6D4;
+            --accent-red: #EF4444;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* Background Grid Pattern */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background: rgba(11, 17, 32, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        /* Live Indicator Pulse Ring */
+        .live-dot {
+            position: relative;
+        }
+        .live-dot::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            background-color: #EF4444;
+            opacity: 0.6;
+            animation: ping-slow 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        @keyframes ping-slow {
+            75%, 100% {
+                transform: scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        /* Service Card Hover Lift & Border Glow */
+        .broadcast-card {
+            background: linear-gradient(145deg, rgba(17, 24, 39, 0.9), rgba(11, 17, 32, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .broadcast-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.2), 0 0 20px rgba(6, 182, 212, 0.08) inset;
+        }
+
+        /* Viewfinder Corner Brackets */
+        .vf-bracket {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: rgba(248, 250, 252, 0.7);
+            pointer-events: none;
+        }
+        .vf-tl { top: 10px; left: 10px; border-top: 2px solid; border-left: 2px solid; }
+        .vf-tr { top: 10px; right: 10px; border-top: 2px solid; border-right: 2px solid; }
+        .vf-bl { bottom: 10px; left: 10px; border-bottom: 2px solid; border-left: 2px solid; }
+        .vf-br { bottom: 10px; right: 10px; border-bottom: 2px solid; border-right: 2px solid; }
+
+        /* Audio Level Meter Bars Animation */
+        .vu-bar {
+            animation: eq-bounce 0.9s ease-in-out infinite alternate;
+        }
+        .vu-bar:nth-child(2) { animation-delay: 0.2s; animation-duration: 0.7s; }
+        .vu-bar:nth-child(3) { animation-delay: 0.4s; animation-duration: 1.1s; }
+        .vu-bar:nth-child(4) { animation-delay: 0.1s; animation-duration: 0.8s; }
+        @keyframes eq-bounce {
+            0% { height: 25%; }
+            100% { height: 95%; }
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070B14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06B6D4;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-navy-950">
+
+    <!-- ==================== 1. NAVBAR (STICKY & GLASSMORPHISM) ==================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo + Live Pulse Badge -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+                        <!-- Broadcast Signal Icon -->
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2">
+                            <span class="font-display font-bold text-xl tracking-tight text-white">KAWANUA<span class="text-cyan-400">BROADCAST</span></span>
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-live-500/15 text-live-500 border border-live-500/30">
+                                <span class="w-1.5 h-1.5 rounded-full bg-live-500 live-dot"></span>
+                                LIVE
+                            </span>
+                        </div>
+                        <span class="text-[11px] text-slate-400 tracking-wide">Manado & Sulawesi Utara</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#tentang" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Tentang Kami</a>
+                    <a href="#layanan" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Layanan</a>
+                    <a href="#keunggulan" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Keunggulan</a>
+                    <a href="#testimoni" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Testimoni</a>
+                    <a href="#kontak" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-navy-950 bg-cyan-400 hover:bg-cyan-300 shadow-lg shadow-cyan-500/20 transition-all hover:scale-105">
+                        <span>Konsultasi Gratis</span>
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-menu-btn" aria-label="Buka Menu" class="md:hidden p-2.5 rounded-xl bg-navy-800/80 border border-slate-700/70 text-slate-200 hover:text-cyan-400 focus:outline-none">
+                    <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-900/95 backdrop-blur-xl border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <a href="#tentang" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-navy-800/60">Tentang Kami</a>
+            <a href="#layanan" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-navy-800/60">Layanan</a>
+            <a href="#keunggulan" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-navy-800/60">Keunggulan</a>
+            <a href="#testimoni" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:text-cyan-400 hover:bg-navy-800/60">Testimoni</a>
+            <div class="pt-2">
+                <a href="#kontak" class="mobile-link flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-xl text-base font-semibold text-navy-950 bg-cyan-400 hover:bg-cyan-300">
+                    <span>Konsultasi Gratis</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-grid-pattern overflow-hidden">
+        <!-- Ambient Radial Glows -->
+        <div class="absolute top-20 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+                
+                <!-- Left Column: Copy & CTAs -->
+                <div class="lg:col-span-6 space-y-7 text-center lg:text-left reveal active">
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-navy-800/90 border border-cyan-500/30 text-xs sm:text-sm font-medium text-cyan-400">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                        <span>Partner Broadcast Resmi #1 di Sulawesi Utara</span>
+                    </div>
+
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white leading-[1.12]">
+                        Siaran Langsung <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Multi-Kamera</span> Dengan Standar Televisi.
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Solusi Siaran Langsung & Produksi Broadcast Standar Televisi di Manado & Sulawesi Utara. Siap mengawal kelancaran <strong>Corporate Event, Acara Pemerintahan, Pernikahan Adat & Modern, hingga Konser/Festival</strong> dengan Profesional.
+                    </p>
+
+                    <!-- Dual CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#kontak" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-bold text-navy-950 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 shadow-xl shadow-cyan-500/25 transition-all hover:-translate-y-0.5">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span>Minta Penawaran Harga</span>
+                        </a>
+                        <a href="#layanan" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold text-white bg-navy-800/80 hover:bg-navy-700/80 border border-slate-700 hover:border-cyan-500/50 transition-all">
+                            <span>Lihat Layanan Kami</span>
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Local Coverage Trust Strip -->
+                    <div class="pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs text-slate-400">
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            Area Manado, Minahasa, Tomohon & Bitung
+                        </span>
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            Multi Kamera Profesional
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Broadcast Switcher / Multiviewer UI Simulation -->
+                <div class="lg:col-span-6 reveal reveal-delay-2">
+                    <div class="relative rounded-2xl bg-navy-900 border border-slate-700/80 p-3 sm:p-4 shadow-2xl shadow-cyan-500/10 animate-float">
+                        <!-- Top Hardware Bezel Bar -->
+                        <div class="flex items-center justify-between px-3 py-2 bg-navy-950 rounded-xl border border-slate-800 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-live-500 live-dot"></span>
+                                <span class="font-display text-xs font-bold tracking-wider text-live-500 uppercase">ON AIR • PGM OUT</span>
+                            </div>
+                            <div class="hidden sm:flex items-center gap-3 text-[11px] font-mono text-slate-400">
+                                <span>1080p60 / 4K UHD</span>
+                                <span class="text-cyan-400">BITRATE: 12.4 Mbps</span>
+                            </div>
+                            <div id="live-timecode" class="font-mono text-xs text-slate-300 bg-navy-800 px-2 py-0.5 rounded border border-slate-700">
+                                01:14:22:08
+                            </div>
+                        </div>
+
+                        <!-- Main Program Monitor (PGM) -->
+                        <div class="relative aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-slate-900 via-navy-800 to-slate-950 border border-slate-700/70 mb-3">
+                            <!-- Viewfinder Corner Brackets -->
+                            <div class="vf-bracket vf-tl"></div>
+                            <div class="vf-bracket vf-tr"></div>
+                            <div class="vf-bracket vf-bl"></div>
+                            <div class="vf-bracket vf-br"></div>
+
+                            <!-- Simulated Stage / Event Graphic inside Monitor -->
+                            <svg class="w-full h-full object-cover opacity-90" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <radialGradient id="stageGlow" cx="50%" cy="40%" r="55%">
+                                        <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.35"/>
+                                        <stop offset="60%" stop-color="#1E3A8A" stop-opacity="0.15"/>
+                                        <stop offset="100%" stop-color="#0B1120" stop-opacity="0.9"/>
+                                    </radialGradient>
+                                    <linearGradient id="beam1" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="#22D3EE" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect width="640" height="360" fill="url(#stageGlow)"/>
+                                <!-- Stage Spotlights -->
+                                <polygon points="140,0 260,360 60,360" fill="url(#beam1)"/>
+                                <polygon points="500,0 580,360 380,360" fill="url(#beam1)"/>
+                                <!-- Stage Horizon & LED Backdrop -->
+                                <rect x="160" y="75" width="320" height="145" rx="8" fill="#0F172A" stroke="#06B6D4" stroke-opacity="0.5" stroke-width="1.5"/>
+                                <text x="320" y="138" text-anchor="middle" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="18" letter-spacing="2">SULUT DIGITAL SUMMIT</text>
+                                <text x="320" y="162" text-anchor="middle" fill="#22D3EE" font-family="Plus Jakarta Sans, sans-serif" font-size="11" letter-spacing="3">LIVE FROM MANADO CONVENTION CENTER</text>
+                                <!-- Podium & Speaker Silhouette -->
+                                <path d="M295 255 L345 255 L338 315 L302 315 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="1"/>
+                                <circle cx="320" cy="222" r="13" fill="#CBD5E1"/>
+                                <path d="M298 255 C298 238, 342 238, 342 255 Z" fill="#94A3B8"/>
+                                <!-- Stage Floor -->
+                                <line x1="40" y1="315" x2="600" y2="315" stroke="#06B6D4" stroke-opacity="0.4" stroke-width="2"/>
+                            </svg>
+
+                            <!-- Center Crosshair -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+                                <div class="w-6 h-6 border border-cyan-400/60 rounded-full flex items-center justify-center">
+                                    <div class="w-1 h-1 bg-cyan-400 rounded-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Camera Telemetry Overlay -->
+                            <div class="absolute top-3 left-6 flex items-center gap-2 bg-navy-950/80 backdrop-blur px-2.5 py-1 rounded text-[11px] font-mono text-white border border-white/10">
+                                <span id="active-cam-label" class="text-cyan-400 font-bold">CAM 01 • WIDE STAGE</span>
+                                <span class="text-slate-400">|</span>
+                                <span>ISO 800 • f/2.8</span>
+                            </div>
+
+                            <!-- Lower Third Graphic Overlay -->
+                            <div class="absolute bottom-3 left-6 right-16 bg-gradient-to-r from-navy-950/95 via-navy-900/90 to-transparent border-l-4 border-cyan-400 px-3 py-1.5 rounded-r-lg">
+                                <div class="text-xs font-bold text-white tracking-wide">SIARAN LANGSUNG MULTI-PLATFORM</div>
+                                <div class="text-[10px] text-cyan-300">YouTube Live • Zoom Webinar • RTMP Custom Server</div>
+                            </div>
+
+                            <!-- Live Audio VU Meter -->
+                            <div class="absolute bottom-3 right-5 flex items-end gap-1 h-8 px-1.5 py-1 bg-navy-950/80 rounded border border-white/10" title="Audio Level Meter">
+                                <span class="vu-bar w-1 bg-emerald-400 rounded-t"></span>
+                                <span class="vu-bar w-1 bg-emerald-400 rounded-t"></span>
+                                <span class="vu-bar w-1 bg-cyan-400 rounded-t"></span>
+                                <span class="vu-bar w-1 bg-amber-400 rounded-t"></span>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Switcher Multi-Cam Selector Buttons -->
+                        <div class="grid grid-cols-4 gap-2">
+                            <button type="button" data-cam="CAM 01 • WIDE STAGE" class="cam-switch-btn active-cam group relative p-2 rounded-lg bg-live-500/20 border border-live-500 text-left transition-all">
+                                <div class="flex items-center justify-between text-[10px] font-mono font-bold text-live-500">
+                                    <span>CAM 1</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-live-500"></span>
+                                </div>
+                                <div class="text-[11px] text-white font-medium truncate mt-0.5">Wide Stage</div>
+                            </button>
+
+                            <button type="button" data-cam="CAM 02 • CLOSE-UP SPEAKER" class="cam-switch-btn group relative p-2 rounded-lg bg-navy-800/90 hover:bg-navy-700 border border-slate-700 text-left transition-all">
+                                <div class="flex items-center justify-between text-[10px] font-mono font-bold text-slate-400 group-hover:text-cyan-400">
+                                    <span>CAM 2</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                </div>
+                                <div class="text-[11px] text-slate-300 font-medium truncate mt-0.5">Speaker CU</div>
+                            </button>
+
+                            <button type="button" data-cam="CAM 03 • GIMBAL CROWD" class="cam-switch-btn group relative p-2 rounded-lg bg-navy-800/90 hover:bg-navy-700 border border-slate-700 text-left transition-all">
+                                <div class="flex items-center justify-between text-[10px] font-mono font-bold text-slate-400 group-hover:text-cyan-400">
+                                    <span>CAM 3</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                </div>
+                                <div class="text-[11px] text-slate-300 font-medium truncate mt-0.5">Gimbal Wireless</div>
+                            </button>
+
+                            <button type="button" data-cam="CAM 04 • SLIDE / PPT FEED" class="cam-switch-btn group relative p-2 rounded-lg bg-navy-800/90 hover:bg-navy-700 border border-slate-700 text-left transition-all">
+                                <div class="flex items-center justify-between text-[10px] font-mono font-bold text-slate-400 group-hover:text-cyan-400">
+                                    <span>INPUT 4</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                </div>
+                                <div class="text-[11px] text-slate-300 font-medium truncate mt-0.5">Materi / VTR</div>
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-center text-slate-500 mt-2.5">Klik tombol kamera di atas untuk simulasi perpindahan sudut pandang *switcher*.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. ABOUT SECTION (TENTANG KAMI) ==================== -->
+    <section id="tentang" class="py-20 lg:py-28 bg-navy-800/40 border-y border-slate-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="lg:col-span-6 space-y-6 reveal">
+                    <div class="inline-flex items-center gap-2 text-cyan-400 font-display font-semibold text-sm tracking-wider uppercase">
+                        <span class="w-8 h-[2px] bg-cyan-400"></span>
+                        <span>Tentang Kawanua Broadcast</span>
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white leading-tight">
+                        Membawa Standar Operasional <span class="text-cyan-400">Master Control Room</span> Televisi ke Acara Anda.
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Berbasis di pusat kota Manado, <strong class="text-slate-200">Kawanua Broadcast</strong> hadir menjawab tantangan produksi siaran langsung di Sulawesi Utara. Kami memadukan perangkat *video switcher* kelas industri, kamera sinematik 4K, manajemen audio digital jernih, serta teknologi *network bonding* multi-provider agar siaran tetap stabil bahkan di lokasi dengan sinyal menantang.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed">
+                        Mulai dari ballroom hotel bintang lima di Kawasan Megamas Manado, gedung pemerintahan di Tondano, acara adat di Tomohon, hingga kawasan industri Bitung—kru teknis kami siap memastikan setiap momen krusial tersiar dengan sempurna.
+                    </p>
+                </div>
+
+                <!-- Right 3 Highlight Stat Cards -->
+                <div id="keunggulan" class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-5 reveal reveal-delay-2">
+                    <!-- Stat Card 1 -->
+                    <div class="broadcast-card p-6 rounded-2xl flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-display text-2xl sm:text-3xl font-bold text-white">99.9% Uptime</div>
+                            <div class="text-sm font-semibold text-cyan-400 mt-0.5">Koneksi Internet Bonding Multi-ISP</div>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1.5">Menggabungkan 4 jalur seluler (Telkomsel, XL, Indosat) + LAN venue secara bersamaan sehingga bebas buffering dan anti-putus.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="broadcast-card p-6 rounded-2xl flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center shrink-0 text-blue-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-display text-2xl sm:text-3xl font-bold text-white">Multi-Cam 4K / FHD</div>
+                            <div class="text-sm font-semibold text-blue-400 mt-0.5">Visual Sinematik & Clean Feed</div>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1.5">Dukungan hingga 6 sudut kamera secara simultan lengkap dengan *wireless transmitter* low-latency dan grafis *lower-third* kustom.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 3 -->
+                    <div class="broadcast-card p-6 rounded-2xl flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-live-500/15 border border-live-500/30 flex items-center justify-center shrink-0 text-live-500">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-display text-2xl sm:text-3xl font-bold text-white">150+ Event Sukses</div>
+                            <div class="text-sm font-semibold text-live-500 mt-0.5">Tim Broadcast Berpengalaman</div>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1.5">Dipimpin oleh *Show Director*, *Switcher Operator*, dan *Audio Engineer* bersertifikat yang terbiasa menangani protokol VVIP.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. SERVICES SECTION (LAYANAN KAMI) ==================== -->
+    <section id="layanan" class="py-20 lg:py-28 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-flex items-center gap-2 text-cyan-400 font-display font-semibold text-sm tracking-wider uppercase mb-3">
+                    <span class="w-6 h-[2px] bg-cyan-400"></span>
+                    <span>Layanan Produksi</span>
+                    <span class="w-6 h-[2px] bg-cyan-400"></span>
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                    Solusi Lengkap Kebutuhan <span class="text-cyan-400">Live & Broadcast</span>
+                </h2>
+                <p class="text-slate-400 mt-4 text-base sm:text-lg">
+                    Paket produksi fleksibel yang dirancang khusus menyesuaikan skala venue, kebutuhan interaktivitas, dan platform tujuan siaran Anda.
+                </p>
+            </div>
+
+            <!-- 4 Service Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Service 1 -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-1">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-6">
+                            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Multi-Camera Live Streaming</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Produksi 3–4 kamera sinematik dengan <em>video switcher</em> profesional untuk siaran langsung ke YouTube, Zoom, Instagram, Facebook, atau server RTMP khusus.
+                        </p>
+                    </div>
+                    <ul class="space-y-2.5 pt-5 border-t border-slate-800 text-xs text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Full HD 1080p60 / 4K Recording</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Custom Bumper, Frame & Lower Third</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-2">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6">
+                            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Hybrid Event & Webinar</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Integrasi interaksi peserta daring dan luring secara mulus untuk seminar nasional, rapat kerja instansi, peluncuran produk, dan konferensi pers.
+                        </p>
+                    </div>
+                    <ul class="space-y-2.5 pt-5 border-t border-slate-800 text-xs text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Two-Way Audio Feedback Free</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Koneksi ke LED Screen Ballroom</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-3">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-live-500/20 to-rose-600/20 border border-live-500/30 flex items-center justify-center text-live-500 mb-6">
+                            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Wedding & Private Broadcast</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Siaran langsung pemberkatan gereja, prosesi adat Minahasa, dan resepsi pernikahan eksklusif bagi keluarga besar di luar kota atau luar negeri.
+                        </p>
+                    </div>
+                    <ul class="space-y-2.5 pt-5 border-t border-slate-800 text-xs text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-live-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Sinematik Color Grading Live</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-live-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Private Link & Master File USB</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-4">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+                            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-3">Equipment Rental & Crew</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Penyewaan unit <em>bonding internet</em>, <em>video switcher</em> ATEM/vMix, <em>wireless video transmitter</em> Hollyland, intercom kru, dan operator ahli.
+                        </p>
+                    </div>
+                    <ul class="space-y-2.5 pt-5 border-t border-slate-800 text-xs text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Dukungan EO & Vendor Lokal</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>Standby Teknis di Lokasi</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. TESTIMONIALS SECTION (TESTIMONI KLIEN) ==================== -->
+    <section id="testimoni" class="py-20 lg:py-28 bg-navy-800/40 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-flex items-center gap-2 text-cyan-400 font-display font-semibold text-sm tracking-wider uppercase mb-3">
+                    <span class="w-6 h-[2px] bg-cyan-400"></span>
+                    <span>Kepercayaan Klien</span>
+                    <span class="w-6 h-[2px] bg-cyan-400"></span>
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">
+                    Dipercaya Instansi, Korporat & EO di <span class="text-cyan-400">Sulawesi Utara</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+                
+                <!-- Testimonial 1: Event Pemerintahan -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-1">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 mb-4">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed italic">
+                            "Siaran langsung Rapat Koordinasi Nasional di Four Points Manado berjalan mulus tanpa kendala sedikit pun. 
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3.5 pt-6 mt-6 border-t border-slate-800">
+                        <div class="w-11 h-11 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center font-display font-bold text-cyan-400">
+                            WL
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white text-sm">Wiliam</div>
+                            <div class="text-xs text-slate-400">Ketua Panitia Rapat Koordinasi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2: Wedding Organizer -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-2">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 mb-4">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed italic">
+                            "Klien wedding kami di Tomohon punya banyak keluarga di Belanda dan Amerika. Hasil gambarnya sinematik seperti film, audionya bersih, dan kru sangat rapi mengikuti rundown pemberkatan."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3.5 pt-6 mt-6 border-t border-slate-800">
+                        <div class="w-11 h-11 rounded-full bg-live-500/20 border border-live-500/40 flex items-center justify-center font-display font-bold text-live-500">
+                            CW
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white text-sm">Clarissa Wong</div>
+                            <div class="text-xs text-slate-400">Founder Dream Wedding Organizer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3: Corporate / Swasta -->
+                <div class="broadcast-card rounded-2xl p-7 flex flex-col justify-between reveal reveal-delay-3">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 mb-4">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed italic">
+                            "Sangat terbantu untuk Town Hall Meeting Manado yang terhubung langsung dengan kantor pusat di Jakarta. Transisi materi presentasi dan tanya jawab Zoom sangat rapih."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3.5 pt-6 mt-6 border-t border-slate-800">
+                        <div class="w-11 h-11 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center font-display font-bold text-blue-400">
+                            FL
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white text-sm">Frans Lasut</div>
+                            <div class="text-xs text-slate-400">Kepala Bid.TU TVRI SULUT</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. CONTACT & FOOTER SECTION ==================== -->
+    <section id="kontak" class="py-20 lg:py-28 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Left Column: Direct Studio Info -->
+                <div class="lg:col-span-5 space-y-8 reveal">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-cyan-400 font-display font-semibold text-sm tracking-wider uppercase mb-3">
+                            <span class="w-6 h-[2px] bg-cyan-400"></span>
+                            <span>Hubungi Tim Produksi</span>
+                        </div>
+                        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white leading-tight">
+                            Siap Mengudarakan Acara Anda Secara Profesional?
+                        </h2>
+                        <p class="text-slate-400 mt-4 leading-relaxed">
+                            Konsultasikan kebutuhan teknis, survei lokasi venue di area Manado & sekitarnya, serta dapatkan estimasi penawaran harga terbaik dalam waktu kurang dari 2 jam.
+                        </p>
+                    </div>
+
+                    <!-- Contact Cards -->
+                    <div class="space-y-4">
+                        <!-- Studio Address -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-navy-800/60 border border-slate-800">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-white">Address</div>
+                                <div class="text-sm text-slate-400 mt-0.5">Mountain Vista Residence Blok Valencia No.1  Mapanget Talawaan  Sulawesi Utara 95373</div>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-navy-800/60 border border-slate-800">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-white">WhatsApp Fast Response (24/7)</div>
+                                <div class="text-sm text-cyan-400 font-medium mt-0.5">+62 856-9131-2039 (Admin Produksi)</div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-navy-800/60 border border-slate-800">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-white">Email Resmi & Penawaran Tender</div>
+                                <div class="text-sm text-slate-400 mt-0.5">produksi@kawanuabroadcast.id</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Booking / Quotation Form -->
+                <div class="lg:col-span-7 reveal reveal-delay-2">
+                    <div class="broadcast-card rounded-2xl p-6 sm:p-9">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-display text-2xl font-bold text-white">Formulir Konsultasi & Penawaran</h3>
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-md bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Gratis Konsultasi</span>
+                        </div>
+
+                        <!-- Custom Toast / Alert Notification Banner (Hidden by Default) -->
+                        <div id="form-feedback" class="hidden mb-6 p-4 rounded-xl border text-sm flex items-start gap-3 transition-all" role="alert">
+                            <div id="feedback-icon" class="shrink-0 mt-0.5"></div>
+                            <div class="flex-1">
+                                <div id="feedback-title" class="font-bold"></div>
+                                <div id="feedback-message" class="mt-0.5 text-xs sm:text-sm opacity-90"></div>
+                            </div>
+                            <button type="button" id="close-feedback" class="text-slate-400 hover:text-white">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+
+                        <form id="booking-form" class="space-y-5" novalidate>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <!-- Nama Lengkap -->
+                                <div>
+                                    <label for="nama" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nama Lengkap <span class="text-live-500">*</span></label>
+                                    <input type="text" id="nama" name="nama" required placeholder="Contoh: Hendra Lengkong"
+                                        class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors">
+                                </div>
+
+                                <!-- Instansi / Perusahaan -->
+                                <div>
+                                    <label for="instansi" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Instansi / Perusahaan / EO <span class="text-live-500">*</span></label>
+                                    <input type="text" id="instansi" name="instansi" required placeholder="Contoh: Pemprov Sulut / PT Maju Jaya"
+                                        class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <!-- Jenis Acara Dropdown -->
+                                <div>
+                                    <label for="jenis_acara" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Jenis Acara <span class="text-live-500">*</span></label>
+                                    <select id="jenis_acara" name="jenis_acara" required
+                                        class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors">
+                                        <option value="" disabled selected>-- Pilih Kategori Acara --</option>
+                                        <option value="Multi-Camera Corporate / Pemerintah">Event Pemerintahan / Korporat</option>
+                                        <option value="Hybrid Event & Webinar">Hybrid Event / Seminar / Webinar</option>
+                                        <option value="Wedding & Private Broadcast">Wedding & Acara Keluarga</option>
+                                        <option value="Konser / Festival / Olahraga">Konser / Festival / Turnamen</option>
+                                        <option value="Sewa Alat Bonding & Crew">Sewa Alat Bonding / Switcher / Crew</option>
+                                    </select>
+                                </div>
+
+                                <!-- Tanggal Acara -->
+                                <div>
+                                    <label for="tanggal" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Rencana Tanggal Acara <span class="text-live-500">*</span></label>
+                                    <input type="date" id="tanggal" name="tanggal" required
+                                        class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors [color-scheme:dark]">
+                                </div>
+                            </div>
+
+                            <!-- Pesan / Kebutuhan -->
+                            <div>
+                                <label for="pesan" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Detail Kebutuhan & Lokasi Venue <span class="text-live-500">*</span></label>
+                                <textarea id="pesan" name="pesan" rows="4" required placeholder="Jelaskan lokasi venue (misal: Hotel Sintesa Peninsula Manado), jumlah kamera yang diinginkan, dan platform tujuan siaran..."
+                                    class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 px-6 rounded-xl font-bold text-base text-navy-950 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 shadow-lg shadow-cyan-500/20 transition-all flex items-center justify-center gap-2.5">
+                                <span>Kirim Permintaan Penawaran</span>
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-navy-950 border-t border-slate-800/80 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-live-500 live-dot"></span>
+                    <span class="font-display font-bold text-lg text-white">KAWANUA<span class="text-cyan-400">BROADCAST</span></span>
+                    <span class="text-xs text-slate-500 hidden sm:inline">|</span>
+                    <span class="text-xs text-slate-400 hidden sm:inline">Manado, Sulawesi Utara</span>
+                </div>
+
+                <!-- Copyright -->
+                <p class="text-xs sm:text-sm text-slate-400 text-center">
+                    &copy; <span id="current-year"></span> Kawanua Broadcast Indonesia. Hak Cipta Dilindungi Undang-Undang.
+                </p>
+
+                <!-- Social Links (Inline SVG) -->
+                <div class="flex items-center gap-4">
+                    <a href="#kontak" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-navy-800 hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#kontak" aria-label="YouTube" class="w-9 h-9 rounded-lg bg-navy-800 hover:bg-live-500/20 border border-slate-700 hover:border-live-500/50 flex items-center justify-center text-slate-400 hover:text-live-500 transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="#kontak" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-navy-800 hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== VANILLA JAVASCRIPT INTERACTIONS ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Set Current Year in Footer
+            const yearEl = document.getElementById('current-year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // 2. Mobile Navigation Hamburger Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    iconOpen.classList.add('hidden');
+                    iconClose.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                });
+            });
+
+            // 3. Live SMPTE Timecode Ticker in Hero Broadcast Monitor
+            const timecodeEl = document.getElementById('live-timecode');
+            let frames = 8;
+            let seconds = 22;
+            let minutes = 14;
+            let hours = 1;
+
+            setInterval(() => {
+                frames += 6;
+                if (frames >= 60) {
+                    frames = 0;
+                    seconds++;
+                }
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+                const pad = (n) => String(n).padStart(2, '0');
+                if (timecodeEl) {
+                    timecodeEl.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(frames)}`;
+                }
+            }, 100);
+
+            // 4. Interactive Camera Switcher Simulation in Hero UI
+            const camButtons = document.querySelectorAll('.cam-switch-btn');
+            const activeCamLabel = document.getElementById('active-cam-label');
+
+            camButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Reset all buttons to inactive style
+                    camButtons.forEach(b => {
+                        b.classList.remove('bg-live-500/20', 'border-live-500');
+                        b.classList.add('bg-navy-800/90', 'border-slate-700');
+                        const headerRow = b.querySelector('div:first-child');
+                        headerRow.classList.remove('text-live-500');
+                        headerRow.classList.add('text-slate-400');
+                        const dot = headerRow.querySelector('span:last-child');
+                        dot.classList.remove('bg-live-500');
+                        dot.classList.add('bg-emerald-400');
+                    });
+
+                    // Set clicked button as active PGM Tally (Red)
+                    btn.classList.remove('bg-navy-800/90', 'border-slate-700');
+                    btn.classList.add('bg-live-500/20', 'border-live-500');
+                    const activeHeader = btn.querySelector('div:first-child');
+                    activeHeader.classList.remove('text-slate-400');
+                    activeHeader.classList.add('text-live-500');
+                    const activeDot = activeHeader.querySelector('span:last-child');
+                    activeDot.classList.remove('bg-emerald-400');
+                    activeDot.classList.add('bg-live-500');
+
+                    // Update OSD label on monitor
+                    const camName = btn.getAttribute('data-cam');
+                    if (activeCamLabel && camName) {
+                        activeCamLabel.textContent = camName;
+                    }
+                });
+            });
+
+            // 5. Scroll Reveal Animation using IntersectionObserver
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 6. Contact Form Validation & Custom Notification Banner (No window.alert)
+            const bookingForm = document.getElementById('booking-form');
+            const feedbackBox = document.getElementById('form-feedback');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackMsg = document.getElementById('feedback-message');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const closeFeedbackBtn = document.getElementById('close-feedback');
+
+            function showFeedback(type, title, message) {
+                feedbackBox.classList.remove(
+                    'hidden',
+                    'bg-emerald-500/15', 'border-emerald-500/40', 'text-emerald-300',
+                    'bg-live-500/15', 'border-live-500/40', 'text-red-300'
+                );
+
+                if (type === 'success') {
+                    feedbackBox.classList.add('bg-emerald-500/15', 'border-emerald-500/40', 'text-emerald-300');
+                    feedbackIcon.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+                } else {
+                    feedbackBox.classList.add('bg-live-500/15', 'border-live-500/40', 'text-red-300');
+                    feedbackIcon.innerHTML = `<svg class="w-5 h-5 text-live-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+                }
+
+                feedbackTitle.textContent = title;
+                feedbackMsg.textContent = message;
+                feedbackBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            if (closeFeedbackBtn) {
+                closeFeedbackBtn.addEventListener('click', () => {
+                    feedbackBox.classList.add('hidden');
+                });
+            }
+
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const nama = document.getElementById('nama').value.trim();
+                    const instansi = document.getElementById('instansi').value.trim();
+                    const jenisAcara = document.getElementById('jenis_acara').value;
+                    const tanggal = document.getElementById('tanggal').value;
+                    const pesan = document.getElementById('pesan').value.trim();
+
+                    if (!nama || !instansi || !jenisAcara || !tanggal || !pesan) {
+                        showFeedback(
+                            'error',
+                            'Data Belum Lengkap',
+                            'Mohon lengkapi seluruh kolom wajib bertanda bintang (*) agar tim produksi kami dapat menyiapkan estimasi akurat.'
+                        );
+                        return;
+                    }
+
+                    // Format tanggal Indonesia
+                    const dateObj = new Date(tanggal);
+                    const formattedDate = dateObj.toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+
+                    showFeedback(
+                        'success',
+                        `Terima Kasih, ${nama}! Permintaan Terkirim.`,
+                        `Jadwal konsultasi untuk acara "${jenisAcara}" (${instansi}) pada tanggal ${formattedDate} telah dicatat. Producer kami di Manado akan segera menghubungi Anda.`
+                    );
+
+                    bookingForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
